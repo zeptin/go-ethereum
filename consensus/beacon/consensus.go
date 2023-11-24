@@ -360,6 +360,11 @@ func (beacon *Beacon) Finalize(chain consensus.ChainHeaderReader, header *types.
 		state.AddBalance(w.Address, amount)
 	}
 	// No block reward which is issued by consensus layer instead.
+
+	// However, masternode rewards have to be issued within the execution layer so that the reward contract balance
+	// can be withdrawn by registered masternodes.
+	// TODO: This is currently a dummy address and needs to be the masternode contract instead.
+	state.AddBalance(common.HexToAddress("0x123455F7A02c5EeB173C875C98Db9D162797b2C7"), big.NewInt(5000000000000000000))
 }
 
 // FinalizeAndAssemble implements consensus.Engine, setting the final state and
